@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>List View</title>
+</head>
+<body>
+ 
+    <div>
+        <H1>[DB-EMP] 회사 인사 정보 샘플</H1>
+ 
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>empno</th>
+                    <th>ename</th>
+                    <th>job</th>
+                    <th>mgr</th>
+                    <th>hiredate</th>
+                    <th>sal</th>
+                    <th>comm</th>
+                    <th>deptno</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="row:${AllList}">
+                    <th th:text="${row.EMPNO}"></th>
+                    <th th:text="${row.ENAME}"></th>
+                    <th th:text="${row.JOB}"></th>
+                    <th th:text="${row.MGR}"></th>
+                    <th th:text="${row.HIREDATE}"></th>
+                    <th th:text="${row.SAL}"></th>
+                    <th th:text="${row.COMM}"></th>
+                    <th th:text="${row.DEPTNO}"></th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
