@@ -1,0 +1,5 @@
+com\example\demojpa\board\repository\BoardRepository.class
+com\example\demojpa\board\entity\Board.class
+com\example\demojpa\board\service\BoardService.class
+com\example\demojpa\DemojpaApplication.class
+com\example\demojpa\board\controller\BoardController.class
