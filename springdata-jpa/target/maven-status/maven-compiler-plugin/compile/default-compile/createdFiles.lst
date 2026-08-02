@@ -1,0 +1,4 @@
+com\example\demo\DemoApplication.class
+com\example\demo\repository\MemberRepository.class
+com\example\demo\model\Member.class
+com\example\demo\model\Member$MemberBuilder.class
