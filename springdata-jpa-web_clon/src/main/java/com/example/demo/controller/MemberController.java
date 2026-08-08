@@ -27,16 +27,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Member API", description = "Member API 목록입니다.")
 public class MemberController {
 	@Autowired
-	private MemberRepository memberRepository;
+	private MemberRepository _memberRepository;
 	
 	@Autowired
-	private ModelMapper modelMapper;
+	private ModelMapper _modelMapper;
 	
 	@GetMapping("/")
 	@Tag(name = "Member List")
 	@Operation(summary = "Member 목록", description = "Member 목록을 조회")
 	public String memberList(Model model) {
-		List<Member> list = memberRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+		List<Member> list = _memberRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
 		model.addAttribute("list", list);
 		return "member/list";
 	}
@@ -62,15 +62,15 @@ public class MemberController {
 	 */
 	@PostMapping("insert")
 	public String insert(@ModelAttribute MemberDTO dto) {
-		Member member = modelMapper.map(dto, Member.class);
+		Member member = _modelMapper.map(dto, Member.class);
 		member.setRegdate(new Date());
-		memberRepository.save(member);
+		_memberRepository.save(member);
 		return "member/insert";
 	}
 	
 	@PostMapping("view")
 	public String view(@RequestParam(name = "userid") String userid, Model model) {
-		Optional<Member> result = memberRepository.findById(userid);
+		Optional<Member> result = _memberRepository.findById(userid);
 		Member member = result.get();
 		model.addAttribute("dto", member);		
 		return "member/detail";
@@ -78,15 +78,15 @@ public class MemberController {
 	
 	@PostMapping("update")
 	public String update(@ModelAttribute MemberDTO dto, Model model) {
-		Optional<Member> result = memberRepository.findByUseridAndPasswd(dto.getUserid(), dto.getPasswd());
+		Optional<Member> result = _memberRepository.findByUseridAndPasswd(dto.getUserid(), dto.getPasswd());
 		if(result.isPresent()) {
-			Member member = modelMapper.map(dto, Member.class);
+			Member member = _modelMapper.map(dto, Member.class);
 			member.setRegdate(result.get().getRegdate());
-			memberRepository.save(member);
+			_memberRepository.save(member);
 			return "redirect:/";
 		} else {
 			model.addAttribute("message", "비밀번호가 일치하지 않습니다.");
-			Optional<Member> m = memberRepository.findById(dto.getUserid());
+			Optional<Member> m = _memberRepository.findById(dto.getUserid());
 			Member member = m.get();
 			model.addAttribute("dto", member);			
 			return "member/detail";
@@ -95,21 +95,17 @@ public class MemberController {
 	
 	@PostMapping("delete")
 	public String delete(@RequestParam(name = "userid") String userid, @RequestParam(name = "passwd") String passwd, Model model) {
-		Optional<Member> result = memberRepository.findByUseridAndPasswd(userid, passwd);
+		Optional<Member> result = _memberRepository.findByUseridAndPasswd(userid, passwd);
 		if(result.isPresent()) {
-			memberRepository.deleteById(userid);
+			_memberRepository.deleteById(userid);
 			return "redirect:/";
 		} else {
 			model.addAttribute("message", "비밀번호가 일치하지 않습니다.");
-			Optional<Member> m = memberRepository.findById(userid);
+			Optional<Member> m = _memberRepository.findById(userid);
 			Member member = m.get();
 			model.addAttribute("dto", member);			
 			return "member/detail";
 		}
 	}
 	
-	
-	
-	
-
 }
